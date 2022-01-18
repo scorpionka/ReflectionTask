@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ReflectionConsoleApp.Configurations;
+using ReflectionConsoleApp.Providers;
+using System;
 
 namespace ReflectionConsoleApp
 {
@@ -7,6 +9,10 @@ namespace ReflectionConsoleApp
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+
+            ConfigurationComponentIntValue configurationComponentIntValue = new(new ConfigurationProviderCreator());
+
+            configurationComponentIntValue.LoadSettings();
         }
     }
 }
