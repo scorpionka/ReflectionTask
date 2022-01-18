@@ -2,7 +2,7 @@
 
 namespace ReflectionConsoleApp.Attributes
 {
-    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
     public class ConfigurationItemAttribute : Attribute
     {
         private readonly string settingName;

@@ -19,7 +19,8 @@ namespace ReflectionConsoleApp.Configurations
             this.configurationProvider = configurationProvider;
         }
 
-        public T Value { get; set; }
+        [ConfigurationItem("Value", Providers.ProviderType.File)]
+        public virtual T Value { get; set; }
 
         public void LoadSettings()
         {
@@ -35,7 +36,7 @@ namespace ReflectionConsoleApp.Configurations
             this.configurationProvider.SaveSetting(valueInfo.Value.Item1, valueInfo.Value.Item2);
         }
 
-        private static (string, Providers.ProviderType)? GetProperty(string propertyName)
+        public static (string, Providers.ProviderType)? GetProperty(string propertyName)
         {
             PropertyInfo propertyInfo = typeof(ConfigurationComponentBase<T>).GetProperty(propertyName);
             ConfigurationItemAttribute configurationItemAttribute = (ConfigurationItemAttribute)Attribute.GetCustomAttribute(propertyInfo, typeof(ConfigurationItemAttribute));

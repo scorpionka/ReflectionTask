@@ -10,6 +10,6 @@ namespace ReflectionConsoleApp.Configurations
         }
 
         [ConfigurationItem("IntValue", Providers.ProviderType.File)]
-        public new int Value { get; set; }
+        public override int Value { get; set; }
     }
 }
