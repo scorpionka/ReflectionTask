@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ReflectionConsoleApp.Providers.ConfigurationProviders
+﻿namespace ReflectionConsoleApp.Providers.ConfigurationProviders
 {
-    public class ConfigurationProvider
+    public class ConfigurationProvider<T>
     {
-        public virtual void LoadSettings(string settingName, ProviderType providerType)
+        public virtual T LoadSettings(string settingName, ProviderType providerType)
         {
             throw new System.NotImplementedException();
         }
 
-        public virtual void SaveSetting(string settingName, ProviderType providerType)
+        public virtual void SaveSettings(string settingName, ProviderType providerType, T value)
         {
             throw new System.NotImplementedException();
         }

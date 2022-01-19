@@ -1,8 +1,8 @@
 ﻿namespace ReflectionConsoleApp.Providers.Interfaces
 {
-    public interface IConfigurationProviderCreator
+    public interface IConfigurationProviderCreator<T>
     {
-        void LoadSettings(string settingName, ProviderType providerType);
-        void SaveSetting(string settingName, ProviderType providerType);
+        T LoadSettings(string settingName, ProviderType providerType);
+        void SaveSettings(string settingName, ProviderType providerType, T value);
     }
 }

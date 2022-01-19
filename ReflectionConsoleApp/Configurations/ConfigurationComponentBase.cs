@@ -1,44 +1,36 @@
 ﻿using ReflectionConsoleApp.Attributes;
-using ReflectionConsoleApp.Providers;
 using ReflectionConsoleApp.Providers.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReflectionConsoleApp.Configurations
 {
     public class ConfigurationComponentBase<T>
     {
-        private readonly IConfigurationProviderCreator configurationProvider;
+        private readonly IConfigurationProviderCreator<T> configurationProvider;
 
-        public ConfigurationComponentBase(IConfigurationProviderCreator configurationProvider)
+        public ConfigurationComponentBase(IConfigurationProviderCreator<T> configurationProvider)
         {
             this.configurationProvider = configurationProvider;
         }
 
-        [ConfigurationItem("Value", Providers.ProviderType.File)]
-        public virtual T Value { get; set; }
-
-        public void LoadSettings()
+        public T LoadSettings(string propertyName)
         {
-            var valueInfo = GetProperty(nameof(this.Value));
+            var valueInfo = GetProperty(propertyName);
 
-            this.configurationProvider.LoadSettings(valueInfo.Value.Item1, valueInfo.Value.Item2);
+            return this.configurationProvider.LoadSettings(valueInfo.Value.Item1, valueInfo.Value.Item2);
         }
 
-        public void SaveSettings()
+        public void SaveSettings(string propertyName, T value)
         {
-            var valueInfo = GetProperty(nameof(this.Value));
+            var valueInfo = GetProperty(propertyName);
 
-            this.configurationProvider.SaveSetting(valueInfo.Value.Item1, valueInfo.Value.Item2);
+            this.configurationProvider.SaveSettings(valueInfo.Value.Item1, valueInfo.Value.Item2, value);
         }
 
-        public static (string, Providers.ProviderType)? GetProperty(string propertyName)
+        private static (string, Providers.ProviderType)? GetProperty(string propertyName)
         {
-            PropertyInfo propertyInfo = typeof(ConfigurationComponentBase<T>).GetProperty(propertyName);
+            PropertyInfo propertyInfo = typeof(Configuration).GetProperty(propertyName);
             ConfigurationItemAttribute configurationItemAttribute = (ConfigurationItemAttribute)Attribute.GetCustomAttribute(propertyInfo, typeof(ConfigurationItemAttribute));
 
             if (configurationItemAttribute != null)

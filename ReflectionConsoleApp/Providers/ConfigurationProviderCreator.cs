@@ -4,27 +4,28 @@ using System;
 
 namespace ReflectionConsoleApp.Providers
 {
-    public class ConfigurationProviderCreator : IConfigurationProviderCreator
+    public class ConfigurationProviderCreator<T> : IConfigurationProviderCreator<T>
     {
         public ConfigurationProviderCreator()
         {
         }
 
-        public void LoadSettings(string settingName, ProviderType providerType)
+        public T LoadSettings(string settingName, ProviderType providerType)
         {
-            ConfigurationProvider provider = CreateConfigurationProvider(providerType);
-            provider.LoadSettings(settingName, providerType);
+            ConfigurationProvider<T> provider = CreateConfigurationProvider(providerType);
+            return provider.LoadSettings(settingName, providerType);
         }
 
-        public void SaveSetting(string settingName, ProviderType providerType)
+        public void SaveSettings(string settingName, ProviderType providerType, T value)
         {
-            ConfigurationProvider provider = CreateConfigurationProvider(providerType);
+            ConfigurationProvider<T> provider = CreateConfigurationProvider(providerType);
+            provider.SaveSettings(settingName, providerType, value);
         }
 
-        private ConfigurationProvider CreateConfigurationProvider(ProviderType providerType) => providerType switch
+        private ConfigurationProvider<T> CreateConfigurationProvider(ProviderType providerType) => providerType switch
         {
-            ProviderType.File => new FileConfigurationProvider(),
-            ProviderType.ConfigurationManager => new ConfigurationManagerConfigurationProvider(),
+            ProviderType.File => new FileConfigurationProvider<T>(),
+            ProviderType.ConfigurationManager => new ConfigurationManagerConfigurationProvider<T>(),
             _ => throw new NotImplementedException(),
         };
     }

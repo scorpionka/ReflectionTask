@@ -3,15 +3,16 @@ using System;
 
 namespace ReflectionConsoleApp.Providers
 {
-    public class ConfigurationManagerConfigurationProvider : ConfigurationProvider
+    public class ConfigurationManagerConfigurationProvider<T> : ConfigurationProvider<T>
     {
-        public override void LoadSettings(string settingName, ProviderType providerType)
+        public override T LoadSettings(string settingName, ProviderType providerType)
         {
             Console.WriteLine(settingName);
             Console.WriteLine(providerType);
+            return default(T);
         }
 
-        public override void SaveSetting(string settingName, ProviderType providerType)
+        public override void SaveSettings(string settingName, ProviderType providerType, T value)
         {
             Console.WriteLine(settingName);
             Console.WriteLine(providerType);

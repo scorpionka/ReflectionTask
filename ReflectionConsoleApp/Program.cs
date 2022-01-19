@@ -10,9 +10,15 @@ namespace ReflectionConsoleApp
         {
             Console.WriteLine("Hello World!");
 
-            ConfigurationComponentIntValue configurationComponentIntValue = new(new ConfigurationProviderCreator());
+            ConfigurationComponentBase<object> configurationComponentBase = new(new ConfigurationProviderCreator<object>());
 
-            configurationComponentIntValue.LoadSettings();
+            Console.WriteLine(configurationComponentBase.LoadSettings("IntValue"));
+
+            configurationComponentBase.LoadSettings("FloatValue");
+
+            configurationComponentBase.LoadSettings("StringValue");
+
+            configurationComponentBase.LoadSettings("TimeSpanValue");
         }
     }
 }
