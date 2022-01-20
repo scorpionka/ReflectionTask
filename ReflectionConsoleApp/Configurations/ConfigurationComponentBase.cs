@@ -5,40 +5,51 @@ using System.Reflection;
 
 namespace ReflectionConsoleApp.Configurations
 {
-    public class ConfigurationComponentBase<T>
+    public class ConfigurationComponentBase
     {
-        private readonly IConfigurationProviderCreator<T> configurationProvider;
+        private readonly IConfigurationProviderCreator configurationProvider;
 
-        public ConfigurationComponentBase(IConfigurationProviderCreator<T> configurationProvider)
+        public ConfigurationComponentBase(IConfigurationProviderCreator configurationProvider)
         {
             this.configurationProvider = configurationProvider;
         }
 
-        public T LoadSettings(string propertyName)
+        public void LoadSettings(ConfigurationSettings configurationSettings)
         {
-            var valueInfo = GetProperty(propertyName);
-
-            return this.configurationProvider.LoadSettings(valueInfo.Value.Item1, valueInfo.Value.Item2);
-        }
-
-        public void SaveSettings(string propertyName, T value)
-        {
-            var valueInfo = GetProperty(propertyName);
-
-            this.configurationProvider.SaveSettings(valueInfo.Value.Item1, valueInfo.Value.Item2, value);
-        }
-
-        private static (string, Providers.ProviderType)? GetProperty(string propertyName)
-        {
-            PropertyInfo propertyInfo = typeof(Configuration).GetProperty(propertyName);
-            ConfigurationItemAttribute configurationItemAttribute = (ConfigurationItemAttribute)Attribute.GetCustomAttribute(propertyInfo, typeof(ConfigurationItemAttribute));
-
-            if (configurationItemAttribute != null)
+            foreach (var propertyInfo in GetConfigurationSettingsPropertiesInfo())
             {
-                return (configurationItemAttribute.SettingName, configurationItemAttribute.ProviderType);
+                ConfigurationItemAttribute configurationItemAttribute = (ConfigurationItemAttribute)Attribute.GetCustomAttribute(propertyInfo, typeof(ConfigurationItemAttribute));
+
+                if (configurationItemAttribute != null)
+                {
+                    propertyInfo.SetValue(configurationSettings, this.configurationProvider.LoadSettings(propertyInfo, configurationItemAttribute));
+                }
+            }
+        }
+
+        public void SaveSettings(ConfigurationSettings configurationSettings)
+        {
+            foreach (var propertyInfo in GetConfigurationSettingsPropertiesInfo())
+            {
+                ConfigurationItemAttribute configurationItemAttribute = (ConfigurationItemAttribute)Attribute.GetCustomAttribute(propertyInfo, typeof(ConfigurationItemAttribute));
+
+                if (configurationItemAttribute != null)
+                {
+                    this.configurationProvider.SaveSettings(propertyInfo, propertyInfo.GetValue(configurationSettings), configurationItemAttribute);
+                }
+            }
+        }
+
+        private static PropertyInfo[] GetConfigurationSettingsPropertiesInfo()
+        {
+            PropertyInfo[] propertiesInfo = typeof(ConfigurationSettings).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            if (propertiesInfo is null)
+            {
+                throw new ArgumentNullException(nameof(propertiesInfo));
             }
 
-            return null;
+            return propertiesInfo;
         }
     }
 }

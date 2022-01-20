@@ -1,31 +1,29 @@
-﻿using ReflectionConsoleApp.Providers.ConfigurationProviders;
+﻿using ReflectionConsoleApp.Attributes;
+using ReflectionConsoleApp.Providers.ConfigurationProviders;
 using ReflectionConsoleApp.Providers.Interfaces;
 using System;
+using System.Reflection;
 
 namespace ReflectionConsoleApp.Providers
 {
-    public class ConfigurationProviderCreator<T> : IConfigurationProviderCreator<T>
+    public class ConfigurationProviderCreator : IConfigurationProviderCreator
     {
-        public ConfigurationProviderCreator()
+        public object LoadSettings(PropertyInfo propertyInfo, ConfigurationItemAttribute configurationItemAttribute)
         {
+            CustomConfigurationProvider provider = CreateConfigurationProvider(configurationItemAttribute.ProviderType);
+            return provider.LoadSettings(propertyInfo);
         }
 
-        public T LoadSettings(string settingName, ProviderType providerType)
+        public void SaveSettings(PropertyInfo propertyInfo, object propertyInfoValue, ConfigurationItemAttribute configurationItemAttribute)
         {
-            ConfigurationProvider<T> provider = CreateConfigurationProvider(providerType);
-            return provider.LoadSettings(settingName, providerType);
+            CustomConfigurationProvider provider = CreateConfigurationProvider(configurationItemAttribute.ProviderType);
+            provider.SaveSettings(propertyInfo, propertyInfoValue);
         }
 
-        public void SaveSettings(string settingName, ProviderType providerType, T value)
+        private CustomConfigurationProvider CreateConfigurationProvider(ProviderType providerType) => providerType switch
         {
-            ConfigurationProvider<T> provider = CreateConfigurationProvider(providerType);
-            provider.SaveSettings(settingName, providerType, value);
-        }
-
-        private ConfigurationProvider<T> CreateConfigurationProvider(ProviderType providerType) => providerType switch
-        {
-            ProviderType.File => new FileConfigurationProvider<T>(),
-            ProviderType.ConfigurationManager => new ConfigurationManagerConfigurationProvider<T>(),
+            ProviderType.File => new FileConfigurationProvider(),
+            ProviderType.ConfigurationManager => new ConfigurationManagerConfigurationProvider(),
             _ => throw new NotImplementedException(),
         };
     }

@@ -1,21 +1,18 @@
 ﻿using ReflectionConsoleApp.Providers.ConfigurationProviders;
 using System;
+using System.Reflection;
 
 namespace ReflectionConsoleApp.Providers
 {
-    public class ConfigurationManagerConfigurationProvider<T> : ConfigurationProvider<T>
+    public class ConfigurationManagerConfigurationProvider : CustomConfigurationProvider
     {
-        public override T LoadSettings(string settingName, ProviderType providerType)
+        public override object LoadSettings(PropertyInfo propertyInfo)
         {
-            Console.WriteLine(settingName);
-            Console.WriteLine(providerType);
-            return default(T);
+            return null;
         }
 
-        public override void SaveSettings(string settingName, ProviderType providerType, T value)
+        public override void SaveSettings(PropertyInfo propertyInfo, object propertyInfoValue)
         {
-            Console.WriteLine(settingName);
-            Console.WriteLine(providerType);
         }
     }
 }

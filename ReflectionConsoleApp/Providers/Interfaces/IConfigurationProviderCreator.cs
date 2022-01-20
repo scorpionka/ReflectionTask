@@ -1,8 +1,11 @@
-﻿namespace ReflectionConsoleApp.Providers.Interfaces
+﻿using ReflectionConsoleApp.Attributes;
+using System.Reflection;
+
+namespace ReflectionConsoleApp.Providers.Interfaces
 {
-    public interface IConfigurationProviderCreator<T>
+    public interface IConfigurationProviderCreator
     {
-        T LoadSettings(string settingName, ProviderType providerType);
-        void SaveSettings(string settingName, ProviderType providerType, T value);
+        object LoadSettings(PropertyInfo propertyInfo, ConfigurationItemAttribute configurationItemAttribute);
+        void SaveSettings(PropertyInfo propertyInfo, object propertyInfoValue, ConfigurationItemAttribute configurationItemAttribute);
     }
 }

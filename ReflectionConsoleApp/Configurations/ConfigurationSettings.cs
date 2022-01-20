@@ -3,7 +3,7 @@ using System;
 
 namespace ReflectionConsoleApp.Configurations
 {
-    public class Configuration
+    public class ConfigurationSettings
     {
         [ConfigurationItem("IntValue", Providers.ProviderType.File)]
         public int IntValue { get; set; }

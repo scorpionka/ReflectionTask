@@ -1,21 +1,39 @@
-﻿using ReflectionConsoleApp.Providers.ConfigurationProviders;
+﻿using Microsoft.Extensions.Configuration;
+using ReflectionConsoleApp.Providers.ConfigurationProviders;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Xml.Linq;
 
 namespace ReflectionConsoleApp.Providers
 {
-    public class FileConfigurationProvider<T> : ConfigurationProvider<T>
+    public class FileConfigurationProvider : CustomConfigurationProvider
     {
-        public override T LoadSettings(string settingName, ProviderType providerType)
+        const string path = "ConfigurationSettings.xml";
+
+        public override object LoadSettings(PropertyInfo propertyInfo)
         {
-            Console.WriteLine(settingName);
-            Console.WriteLine(providerType);
-            return default(T);
+            return null;
         }
 
-        public override void SaveSettings(string settingName, ProviderType providerType, T value)
+        public override void SaveSettings(PropertyInfo propertyInfo, object propertyInfoValue)
         {
-            Console.WriteLine(settingName);
-            Console.WriteLine(providerType);
+            string workingDirectory = Environment.CurrentDirectory;
+            string projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
+            XElement xmlTree = XElement.Load(Path.Combine(projectDirectory, path));
+            XElement child = xmlTree.Element(propertyInfo.Name);
+            if (child is null)
+            {
+                xmlTree.Add(new XElement(propertyInfo.Name, propertyInfoValue));
+            }
+            else
+            {
+                child.ReplaceWith(new XElement(propertyInfo.Name, propertyInfoValue));
+            }
+            
+            xmlTree.Save(Path.Combine(projectDirectory, path));
         }
     }
 }

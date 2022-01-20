@@ -2,6 +2,7 @@
 {
     public enum ProviderType
     {
+        NotSet,
         File,
         ConfigurationManager,
     }
