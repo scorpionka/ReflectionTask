@@ -22,7 +22,7 @@ namespace ReflectionConsoleApp.Configurations
 
                 if (configurationItemAttribute != null)
                 {
-                    propertyInfo.SetValue(configurationSettings, this.configurationProvider.LoadSettings(propertyInfo, configurationItemAttribute));
+                    propertyInfo.SetValue(configurationSettings, this.configurationProvider.LoadSettings(propertyInfo, configurationItemAttribute.ProviderType));
                 }
             }
         }
@@ -35,7 +35,7 @@ namespace ReflectionConsoleApp.Configurations
 
                 if (configurationItemAttribute != null)
                 {
-                    this.configurationProvider.SaveSettings(propertyInfo, propertyInfo.GetValue(configurationSettings), configurationItemAttribute);
+                    this.configurationProvider.SaveSettings(propertyInfo, propertyInfo.GetValue(configurationSettings), configurationItemAttribute.ProviderType);
                 }
             }
         }
