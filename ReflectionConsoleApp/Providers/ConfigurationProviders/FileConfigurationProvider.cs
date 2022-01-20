@@ -45,10 +45,5 @@ namespace ReflectionConsoleApp.Providers
 
             xmlTree.Save(path);
         }
-
-        private static dynamic Cast(dynamic obj, Type castTo)
-        {
-            return Convert.ChangeType(obj, castTo);
-        }
     }
 }

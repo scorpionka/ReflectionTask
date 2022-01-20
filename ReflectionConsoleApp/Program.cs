@@ -14,12 +14,12 @@ namespace ReflectionConsoleApp
 
             ConfigurationSettings configurationSettings = new();
 
-            //configurationSettings.IntValue = 5;
-            //configurationSettings.FloatValue = 1.25F;
-            //configurationSettings.StringValue = "value";
-            //configurationSettings.TimeSpanValue = TimeSpan.FromSeconds(1);
+            configurationSettings.IntValue = 7;
+            configurationSettings.FloatValue = 1.68F;
+            configurationSettings.StringValue = "value";
+            configurationSettings.TimeSpanValue = TimeSpan.FromSeconds(100);
 
-            //configurationComponentBase.SaveSettings(configurationSettings);
+            configurationComponentBase.SaveSettings(configurationSettings);
 
             configurationComponentBase.LoadSettings(configurationSettings);
 
