@@ -1,5 +1,4 @@
 ﻿using ReflectionConsoleApp.Attributes;
-using ReflectionConsoleApp.Providers.Interfaces;
 using System;
 using System.Reflection;
 
@@ -7,9 +6,9 @@ namespace ReflectionConsoleApp.Configurations
 {
     public class ConfigurationComponentBase
     {
-        private readonly IConfigurationProviderCreator configurationProvider;
+        private readonly Providers.Providers.Interfaces.IConfigurationProviderCreator configurationProvider;
 
-        public ConfigurationComponentBase(IConfigurationProviderCreator configurationProvider)
+        public ConfigurationComponentBase(Providers.Providers.Interfaces.IConfigurationProviderCreator configurationProvider)
         {
             this.configurationProvider = configurationProvider;
         }

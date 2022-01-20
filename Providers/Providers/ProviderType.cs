@@ -1,4 +1,4 @@
-﻿namespace ReflectionConsoleApp.Providers
+﻿namespace Providers.Providers
 {
     public enum ProviderType
     {

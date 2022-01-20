@@ -5,16 +5,16 @@ namespace ReflectionConsoleApp.Configurations
 {
     public class ConfigurationSettings
     {
-        [ConfigurationItem("IntValue", Providers.ProviderType.File)]
+        [ConfigurationItem("IntValue", Providers.Providers.ProviderType.File)]
         public int IntValue { get; set; }
 
-        [ConfigurationItem("FloatValue", Providers.ProviderType.ConfigurationManager)]
+        [ConfigurationItem("FloatValue", Providers.Providers.ProviderType.ConfigurationManager)]
         public float FloatValue { get; set; }
 
-        [ConfigurationItem("StringValue", Providers.ProviderType.File)]
+        [ConfigurationItem("StringValue", Providers.Providers.ProviderType.File)]
         public string StringValue { get; set; }
 
-        [ConfigurationItem("TimeSpanValue", Providers.ProviderType.ConfigurationManager)]
+        [ConfigurationItem("TimeSpanValue", Providers.Providers.ProviderType.ConfigurationManager)]
         public TimeSpan TimeSpanValue { get; set; }
     }
 }

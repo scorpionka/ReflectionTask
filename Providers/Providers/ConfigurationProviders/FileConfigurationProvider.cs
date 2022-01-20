@@ -1,10 +1,9 @@
-﻿using ReflectionConsoleApp.Providers.ConfigurationProviders;
-using System;
+﻿using System;
 using System.IO;
 using System.Reflection;
 using System.Xml.Linq;
 
-namespace ReflectionConsoleApp.Providers
+namespace Providers.Providers.ConfigurationProviders
 {
     public class FileConfigurationProvider : CustomConfigurationProvider
     {

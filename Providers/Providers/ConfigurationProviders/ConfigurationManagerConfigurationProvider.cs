@@ -1,9 +1,8 @@
-﻿using ReflectionConsoleApp.Providers.ConfigurationProviders;
-using System;
+﻿using System;
 using System.Configuration;
 using System.Reflection;
 
-namespace ReflectionConsoleApp.Providers
+namespace Providers.Providers.ConfigurationProviders
 {
     public class ConfigurationManagerConfigurationProvider : CustomConfigurationProvider
     {

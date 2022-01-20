@@ -1,6 +1,7 @@
 ﻿using ReflectionConsoleApp.Configurations;
-using ReflectionConsoleApp.Providers;
 using System;
+using System.IO;
+using System.Reflection;
 
 namespace ReflectionConsoleApp
 {
@@ -8,16 +9,24 @@ namespace ReflectionConsoleApp
     {
         static void Main()
         {
-            Console.WriteLine("Hello World!");
+            string workingDirectory = Environment.CurrentDirectory;
+            string projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
+            string path = Path.Combine(projectDirectory, "Providers.dll");
 
-            ConfigurationComponentBase configurationComponentBase = new(new ConfigurationProviderCreator());
+            Assembly assembly = Assembly.LoadFrom(path);
+
+            Type typeConfigurationProviderCreator = assembly.GetType("Providers.Providers.ConfigurationProviderCreator");
+
+            dynamic instanceConfigurationProviderCreator = Activator.CreateInstance(typeConfigurationProviderCreator);
+
+            ConfigurationComponentBase configurationComponentBase = new(instanceConfigurationProviderCreator);
 
             ConfigurationSettings configurationSettings = new();
 
-            configurationSettings.IntValue = 7;
-            configurationSettings.FloatValue = 1.68F;
-            configurationSettings.StringValue = "value";
-            configurationSettings.TimeSpanValue = TimeSpan.FromSeconds(100);
+            configurationSettings.IntValue = 11;
+            configurationSettings.FloatValue = 5.68F;
+            configurationSettings.StringValue = "Hello, world!";
+            configurationSettings.TimeSpanValue = TimeSpan.FromSeconds(1_000_000);
 
             configurationComponentBase.SaveSettings(configurationSettings);
 

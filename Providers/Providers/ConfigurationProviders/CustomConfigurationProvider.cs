@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Reflection;
 
-namespace ReflectionConsoleApp.Providers.ConfigurationProviders
+namespace Providers.Providers.ConfigurationProviders
 {
     public abstract class CustomConfigurationProvider
     {

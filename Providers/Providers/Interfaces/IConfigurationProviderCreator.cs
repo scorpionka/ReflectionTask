@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace ReflectionConsoleApp.Providers.Interfaces
+namespace Providers.Providers.Interfaces
 {
     public interface IConfigurationProviderCreator
     {
