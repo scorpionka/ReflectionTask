@@ -1,17 +1,20 @@
-﻿using System.Reflection;
+﻿using System;
+using System.IO;
+using System.Reflection;
 
 namespace ReflectionConsoleApp.Providers.ConfigurationProviders
 {
-    public class CustomConfigurationProvider
+    public abstract class CustomConfigurationProvider
     {
-        public virtual object LoadSettings(PropertyInfo propertyInfo)
-        {
-            throw new System.NotImplementedException();
-        }
+        public abstract object LoadSettings(PropertyInfo propertyInfo);
 
-        public virtual void SaveSettings(PropertyInfo propertyInfo, object propertyInfoValue)
+        public abstract void SaveSettings(PropertyInfo propertyInfo, object propertyInfoValue);
+
+        public static string GetProjectDirectoryFullPath()
         {
-            throw new System.NotImplementedException();
+            string workingDirectory = Environment.CurrentDirectory;
+            string projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
+            return projectDirectory;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace ReflectionConsoleApp.Providers
             provider.SaveSettings(propertyInfo, propertyInfoValue);
         }
 
-        private CustomConfigurationProvider CreateConfigurationProvider(ProviderType providerType) => providerType switch
+        private static CustomConfigurationProvider CreateConfigurationProvider(ProviderType providerType) => providerType switch
         {
             ProviderType.File => new FileConfigurationProvider(),
             ProviderType.ConfigurationManager => new ConfigurationManagerConfigurationProvider(),

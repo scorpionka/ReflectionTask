@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using ReflectionConsoleApp.Configurations;
+﻿using ReflectionConsoleApp.Configurations;
 using ReflectionConsoleApp.Providers;
 using System;
 
@@ -9,23 +6,27 @@ namespace ReflectionConsoleApp
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             Console.WriteLine("Hello World!");
 
             ConfigurationComponentBase configurationComponentBase = new(new ConfigurationProviderCreator());
 
+            ConfigurationSettings configurationSettings = new();
 
-            ConfigurationSettings configurationSettings = new ConfigurationSettings();
+            //configurationSettings.IntValue = 5;
+            //configurationSettings.FloatValue = 1.25F;
+            //configurationSettings.StringValue = "value";
+            //configurationSettings.TimeSpanValue = TimeSpan.FromSeconds(1);
 
-            configurationSettings.IntValue = 3;
-            configurationSettings.FloatValue = 1.25F;
-            configurationSettings.StringValue = "hello";
-            configurationSettings.TimeSpanValue = TimeSpan.FromSeconds(1);
-
-            configurationComponentBase.SaveSettings(configurationSettings);
+            //configurationComponentBase.SaveSettings(configurationSettings);
 
             configurationComponentBase.LoadSettings(configurationSettings);
+
+            Console.WriteLine(configurationSettings.IntValue);
+            Console.WriteLine(configurationSettings.StringValue);
+            Console.WriteLine(configurationSettings.FloatValue);
+            Console.WriteLine(configurationSettings.TimeSpanValue);
         }
     }
 }
